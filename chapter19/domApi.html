@@ -9,12 +9,17 @@
   <link href="bootstrap-theme.css" rel="stylesheet" />
   <script>
     angular.module("exampleApp", [])
+      .config(function($locationProvider) {
+        if (window.history && history.pushState) {
+          $locationProvider.html5Mode(true);
+        }
+      })
       .controller("defaultCtrl", function($scope, $location) {
-        $scope.$on("$locationChangeSuccess", function(event, newUrl){
-          $scope.url=newUrl;
+        $scope.$on("$locationChangeSuccess", function(event, newUrl) {
+          $scope.url = newUrl;
         });
-        $scope.setUrl = function(component){
-          switch(component){
+        $scope.setUrl = function(component) {
+          switch (component) {
             case "reset":
               $location.path("");
               $location.hash("");
@@ -39,18 +44,19 @@
 </head>
 
 <body ng-controller="defaultCtrl">
+  <base href="/">
   <div class="panel panel-default">
     <h4 class="panel-heading">URL</h4>
-      <div class="panel-body">
-        <p>The URL is: {{url}}</p>
-        <div class="btn-group">
-          <button class="btn btn-primary" ng-click="setUrl('reset')">Reset</button>
-          <button class="btn btn-primary" ng-click="setUrl('path')">Path</button>
-          <button class="btn btn-primary" ng-click="setUrl('hash')">Hash</button>
-          <button class="btn btn-primary" ng-click="setUrl('search')">Search</button>
-          <button class="btn btn-primary" ng-click="setUrl('url')">URL</button>
-        </div>
+    <div class="panel-body">
+      <p>The URL is: {{url}}</p>
+      <div class="btn-group">
+        <button class="btn btn-primary" ng-click="setUrl('reset')">Reset</button>
+        <button class="btn btn-primary" ng-click="setUrl('path')">Path</button>
+        <button class="btn btn-primary" ng-click="setUrl('hash')">Hash</button>
+        <button class="btn btn-primary" ng-click="setUrl('search')">Search</button>
+        <button class="btn btn-primary" ng-click="setUrl('url')">URL</button>
       </div>
+    </div>
   </div>
 </body>
 
