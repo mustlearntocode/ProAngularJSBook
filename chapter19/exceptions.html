@@ -8,9 +8,18 @@
     <link href="bootstrap-theme.css" rel="sytlesheet"/>
     <script>
       angular.module("exampleApp", [])
-        .controller("defaultCtrl", function($scope){
+        .controller("defaultCtrl", function($scope, $exceptionHandler){
           $scope.throwEx = function(){
-            throw new Error("Triggered Exception");
+            try{
+              throw new Error("Triggered Exception");
+            }catch(ex){
+              $exceptionHandler(ex.message, "Button Click");
+            }
+          }
+        })
+        .factory("$exceptionHandler", function($log){
+          return function(exception, cause){
+            $log.error("Message: "+exception + " (Cause: " + cause + ")");
           }
         });
     </script>
